@@ -1,7 +1,9 @@
 package com.addkey.keylibrary.ui;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +16,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadFactory;
+import com.addkey.keylibrary.utils.ThreadPoolUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者:Created by lgy on 2018-03-29.
@@ -27,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int setLayoutRes();
 
+    private static List<Activity> activities = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +43,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        activities.add(this);
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        activities.remove(this);
+        super.onDestroy();
+    }
+    public void finishActivity() {
+        for (Activity activity : activities) {
+            activity.finish();
+        }
+    }
     //   隐藏键盘
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -98,12 +114,68 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //当点击头部返回键时实现按物理返回键的效果，例如打开软键盘点击物理返回键是先关闭软键盘
     public void back() {
-        new Thread(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 Instrumentation instrumentation  = new Instrumentation();
                 instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
             }
-        }).start();
+        };
+        ThreadPoolUtils.getInstance().getFixedThreadPool(5).execute(runnable);
     }
+
+    /**
+     * activity跳转
+     * @param clz
+     */
+    public void startActivity(Class<?> clz){
+        startActivity(new Intent(this,clz));
+    }
+    /**
+     * 跳转页面
+     *
+     * @param clz         所跳转的Activity类
+     * @param requestCode 请求码
+     */
+    public void startActivityForResult(Class<?> clz, int requestCode) {
+        startActivityForResult(new Intent(this, clz), requestCode);
+    }
+    /**
+     * 跳转页面
+     *
+     * @param clz    所跳转的目的Activity类
+     * @param bundle 跳转所携带的信息
+     */
+    public void startActivity(Class<?> clz, Bundle bundle) {
+        Intent intent = new Intent(this, clz);
+        if (bundle != null) {
+            intent.putExtra("bundle", bundle);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转页面
+     *
+     * @param clz         所跳转的Activity类
+     * @param bundle      跳转所携带的信息
+     * @param requestCode 请求码
+     */
+    public void startActivityForResult(Class<?> clz, int requestCode, Bundle bundle) {
+        Intent intent = new Intent(this, clz);
+        if (bundle != null) {
+            intent.putExtra("bundle", bundle);
+        }
+        startActivityForResult(intent, requestCode);
+    }
+    //网络监听Receiver
+
+
+
+    //view和Receive
+
+
+    //Service
+
+
 }
