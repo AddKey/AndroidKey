@@ -1,5 +1,9 @@
 package com.addkey.keylibrary.utils;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
+
 import java.text.DecimalFormat;
 
 public class DoubleUtil {
@@ -27,4 +31,16 @@ public class DoubleUtil {
         DecimalFormat df = new DecimalFormat("#####0.00");
         return df.format(d);
     }
+
+    /**
+     * 保留两位
+     * @param data
+     * @return
+     */
+    public static String to2Double(double data){
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        return decimalFormat.format(data);
+
+    }
+
 }

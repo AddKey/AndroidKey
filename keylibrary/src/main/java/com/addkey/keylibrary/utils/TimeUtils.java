@@ -10,8 +10,10 @@ import java.util.Date;
  */
 public class TimeUtils {
 
-    public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static final SimpleDateFormat DATE_FORMAT_DATE    = new SimpleDateFormat("yyyy-MM-dd");
+
+    public static final String FORMAT_1 = "yyyy-MM-dd hh:mm:ss";
+    public static final String FORMAT_2 = "mm:ss";
+    public static final String FORMAT_3 = "yyyy-MM-dd";
 
     private TimeUtils() {
         throw new AssertionError();
@@ -29,13 +31,12 @@ public class TimeUtils {
     }
 
     /**
-     * long time to string, format is {@link #DEFAULT_DATE_FORMAT}
-     * 
+     *
      * @param timeInMillis
      * @return
      */
     public static String getTime(long timeInMillis) {
-        return getTime(timeInMillis, DEFAULT_DATE_FORMAT);
+        return getTime(timeInMillis, new SimpleDateFormat(FORMAT_1));
     }
 
     /**
@@ -48,8 +49,7 @@ public class TimeUtils {
     }
 
     /**
-     * get current time in milliseconds, format is {@link #DEFAULT_DATE_FORMAT}
-     * 
+     *
      * @return
      */
     public static String getCurrentTimeInString() {

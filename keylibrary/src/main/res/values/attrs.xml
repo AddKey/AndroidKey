@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ImgSwitchButton">
+        <attr name="openBackgroundColor" format="color"/>
+        <attr name="closeBackgroundColor" format="color"/>
+        <attr name="circleRoundColor" format="color"/>
+        <attr name="textColor" format="color"/>
+        <attr name="openImg" format="reference"/>
+        <attr name="closeImg" format="reference"/>
+    </declare-styleable>
+
+</resources>

@@ -7,6 +7,7 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.res.Configuration;
 
 /**
  * AppUtils
@@ -75,5 +76,16 @@ public class AppUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * 是否是平板电脑
+     * @param context
+     * @return
+     */
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }
