@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -15,8 +14,16 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleRegistryOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
+import com.addkey.keylibrary.BuildConfig;
 import com.addkey.keylibrary.utils.ThreadPoolUtils;
 
 import java.util.ArrayList;
@@ -27,7 +34,7 @@ import java.util.List;
  * 邮箱:635286598@qq.com
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements LifecycleObserver {
     protected abstract void init();
 
     protected abstract int setLayoutRes();
@@ -169,14 +176,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         startActivityForResult(intent, requestCode);
     }
-    //网络监听Receiver
-
-
-
-    //view和Receive
-
-
-    //Service
 
 
 }

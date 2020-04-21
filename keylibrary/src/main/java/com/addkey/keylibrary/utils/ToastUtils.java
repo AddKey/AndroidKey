@@ -56,13 +56,13 @@ public class ToastUtils {
         toast.setGravity(gravity,0,50);
         toast.show();
     }
-    public static void show(int resId, Object... args) {
-        show(mContext, String.format(mContext.getResources().getString(resId), args), Toast.LENGTH_SHORT);
-    }
+//    public static void show(int resId, Object... args) {
+//        show(mContext, String.format(mContext.getResources().getString(resId), args), Toast.LENGTH_SHORT);
+//    }
 
-    public static void show( String format, Object... args) {
-        show(mContext, String.format(format, args), Toast.LENGTH_SHORT);
-    }
+//    public static void show( String format, Object... args) {
+//        show(mContext, String.format(format, args), Toast.LENGTH_SHORT);
+//    }
 
     public static void show( int resId, int duration, Object... args) {
         show(mContext, String.format(mContext.getResources().getString(resId), args), duration);
